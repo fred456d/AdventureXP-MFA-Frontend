@@ -1,13 +1,22 @@
-<!DOCTYPE html>
-<html lang="da">
-<head>
-    <meta charset="UTF-8">
-    <title>Simpel JavaScript Test</title>
-</head>
-    <body>
-    <h1 id="greeting">Hej verden!</h1>
-    <button onclick="changeGreeting()">Klik her</button>
-    <!-- Link til JavaScript-filen -->
-    <script src="script.js"></script>
-    </body>
-</html>
+<h1>Static test</h1>
+<p>for Azure Static Web Apps</p>
+
+<div id="time">Loading time...</div>
+
+<script>
+    function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('time').textContent = timeString;
+    }
+
+    // Update the time immediately when the page loads
+    updateTime();
+
+    // Update the time every second
+    setInterval(updateTime, 1000);
+</script>
