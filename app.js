@@ -6,7 +6,24 @@ window.showPage = function(page) {
     if (page === 'forside') {
         contentDiv.innerHTML = `
             <h1>Velkommen til AdventureXP's interne system</h1>
-            <h2>Vælg et punkt i menuen ovenfor</h2>
+            <main>
+                <div class="container">
+                    <!-- Booking Kasse -->
+                    <div class="card">
+                        <h2>Booking</h2>
+                        <a href="#" onclick="showPage('opretBooking')">Opret booking</a>
+                        <a href="#" onclick="showPage('seBooking')">Se/rediger/slet booking</a>
+                    </div>
+            
+                    <!-- Admin Kasse -->
+                    <div class="card">
+                        <h2>Admin</h2>
+                        <a href="#" onclick="showPage('vagtplan')">Vagtplan</a>
+                        <a href="#" onclick="showPage('aktiviteter')">Aktiviteter</a>
+                        <a href="#" onclick="showPage('butik')">Butik</a>
+                    </div>
+                </div>
+            </main>
         `;
     } else if (page === 'aktiviteter') {
         contentDiv.innerHTML = aktiviteterPage();
