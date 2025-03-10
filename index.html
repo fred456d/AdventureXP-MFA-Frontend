@@ -2,30 +2,27 @@
 <html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>Opret Ny Activity</title>
+    <title>AdventureXP internt system</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<h1>Opret en ny aktivitet</h1>
+<header>
+    <div class="logo">
+        <img src="logo.jpg" alt="AdventureXP Logo">
+    </div>
+    <div class="navigation">
+        <button onclick="showPage('forside')">Forside</button>
+        <button onclick="showPage('aktiviteter')">Aktiviteter</button>
+        <button onclick="showPage('booking')">Booking</button>
+        <button onclick="showPage('vagtplan')">Vagtplan</button>
+    </div>
+</header>
 
-<!-- Her oprettes den almindelige html-formular -->
-<form id="activityForm">
-    <label for="title">Titel:</label>
-    <input type="text" id="title" name="title" required><br><br>
+<div id="content">
+    <!-- Indholdet vises her -->
+</div>
 
-    <label for="age_Requirement">Alderskrav:</label>
-    <input type="number" id="age_Requirement" name="age_Requirement"><br><br>
+<script type="module" src="app.js"></script>
 
-    <label for="height_Requirement">Højdekrav (cm):</label>
-    <input type="number" id="height_Requirement" name="height_Requirement"><br><br>
-
-    <label for="equipment">Udstyr:</label>
-    <input type="text" id="equipment" name="equipment"><br><br>
-
-    <label for="hourly_price">Timepris (DKK):</label>
-    <input type="number" id="hourly_price" name="hourly_price" required><br><br>
-
-    <button type="submit">Opret Activity</button>
-</form>
-<script src="activity.js"></script>
 </body>
 </html>
