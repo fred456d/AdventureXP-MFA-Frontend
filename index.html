@@ -1,24 +1,61 @@
-<h1>Static test</h1>
-<p>for Azure Static Web Apps</p>
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Opret Ny Activity</title>
+</head>
+<body>
+<h1>Opret en ny aktivitet</h1>
+<form id="activityForm">
+    <label for="title">Titel:</label>
+    <input type="text" id="title" name="title" required><br><br>
 
-<div id="time">Loading time...</div>
+    <label for="age_Requirement">Alderskrav:</label>
+    <input type="number" id="age_Requirement" name="age_Requirement" required><br><br>
+
+    <label for="height_Requirement">Højdekrav (cm):</label>
+    <input type="number" id="height_Requirement" name="height_Requirement" required><br><br>
+
+    <label for="equipment">Udstyr:</label>
+    <input type="text" id="equipment" name="equipment" required><br><br>
+
+    <label for="hourly_price">Timepris (DKK):</label>
+    <input type="number" id="hourly_price" name="hourly_price" required><br><br>
+
+    <button type="submit">Opret Activity</button>
+</form>
 
 <script>
-    function updateTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('activityForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        const timeString = `${hours}:${minutes}:${seconds}`;
-        document.getElementById('time').textContent = timeString;
-    }
+        const activity = {
+            title: document.getElementById('title').value,
+            age_Requirement: parseInt(document.getElementById('age_Requirement').value),
+            height_Requirement: parseInt(document.getElementById('height_Requirement').value),
+            equipment: document.getElementById('equipment').value,
+            hourly_price: parseInt(document.getElementById('hourly_price').value)
+        };
 
-    // Update the time immediately when the page loads
-    updateTime();
+        try {
+            const response = await fetch('http://localhost:8080/activities', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(activity)
+            });
 
-    // Hej med dig
-
-    // Update the time every second
-    setInterval(updateTime, 1000);
+            if (response.ok) {
+                alert('Aktivitet oprettet succesfuldt!');
+                document.getElementById('activityForm').reset();
+            } else {
+                alert('Fejl under oprettelse af aktivitet.');
+            }
+        } catch (error) {
+            console.error('Fejl:', error);
+        }
+    });
 </script>
+</body>
+</html>
