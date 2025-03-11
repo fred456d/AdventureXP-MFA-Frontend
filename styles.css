@@ -180,11 +180,64 @@ header {
 }
 
 /* Formularstil */
+/* Formularstil */
 form {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap; /* Tillader felter at gå på ny linje, hvis der ikke er plads */
     gap: 15px;
+    align-items: center;
+    justify-content: space-between;
 }
+
+/* Beholder til hvert label + input */
+.form-group {
+    display: flex;
+    flex-direction: column; /* Holder label ovenover input */
+    flex: 1; /* Sørger for at felterne tilpasser sig lige meget */
+    min-width: 150px; /* Minimum bredde for god responsivitet */
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-weight: bold;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+button[type="submit"]:active {
+    transform: translateY(2px);
+}
+
+/* Gør formularen responsiv */
+@media (max-width: 600px) {
+    form {
+        flex-direction: column;
+    }
+}
+
 
 label {
     font-weight: bold;
