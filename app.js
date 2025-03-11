@@ -27,6 +27,7 @@ window.showPage = function(page) {
         `;
     } else if (page === 'aktiviteter') {
         contentDiv.innerHTML = aktiviteterPage();
+        fetchActivities(); // Henter og viser aktiviteter i tabellen
         saveActivity();
 
     } else if (page === 'booking') {
@@ -41,6 +42,31 @@ window.showPage = function(page) {
         `;
     }
 }
+
+async function fetchActivities() {
+    try {
+        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/activities');
+        const activities = await response.json();
+
+        const tableBody = document.getElementById('activitiesTableBody');
+        tableBody.innerHTML = ''; // Ryd tabellen før vi tilføjer nye data
+
+        activities.forEach(activity => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${activity.title}</td>
+                <td>${activity.age_Requirement}</td>
+                <td>${activity.height_Requirement}</td>
+                <td>${activity.equipment}</td>
+                <td>${activity.hourly_price} DKK</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Fejl ved hentning af aktiviteter:', error);
+    }
+}
+
 
 // Her er JS-kode som kører når man trykker submit-knap i ovenståene HTML-->
 // const activity opretter et JS-objekt med de indtastede værdier -->
@@ -74,6 +100,7 @@ function saveActivity(){
             if (response.ok) {
                 alert('Aktivitet oprettet succesfuldt!');
                 document.getElementById('activityForm').reset();
+                fetchActivities(); // Opdater tabellen efter tilføjelse
             } else {
                 alert('Fejl under oprettelse af aktivitet.');
             }

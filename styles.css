@@ -179,28 +179,48 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Formularstil */
-/* Formularstil */
+/* Container-styling */
+#activitiesContainer {
+    width: 100%;
+    max-width: 800px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabel-styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Formular-styling */
 form {
     display: flex;
-    flex-wrap: wrap; /* Tillader felter at gå på ny linje, hvis der ikke er plads */
+    flex-wrap: wrap;
     gap: 15px;
     align-items: center;
     justify-content: space-between;
 }
 
-/* Beholder til hvert label + input */
 .form-group {
     display: flex;
-    flex-direction: column; /* Holder label ovenover input */
-    flex: 1; /* Sørger for at felterne tilpasser sig lige meget */
-    min-width: 150px; /* Minimum bredde for god responsivitet */
-}
-
-label {
-    font-weight: bold;
-    color: #555;
-    margin-bottom: 5px;
+    flex-direction: column;
+    flex: 1;
+    min-width: 150px;
 }
 
 input[type="text"],
@@ -237,6 +257,7 @@ button[type="submit"]:active {
         flex-direction: column;
     }
 }
+
 
 
 label {
