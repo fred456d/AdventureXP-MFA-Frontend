@@ -18,7 +18,7 @@
 };
 
     try {
-    const response = await fetch('http://localhost:8080/activities', {
+    const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/activities', {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json',
