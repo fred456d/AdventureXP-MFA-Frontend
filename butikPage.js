@@ -9,7 +9,7 @@ export function butikPage() {
                 <thead>
                     <tr>
                         <th>Type</th>
-                        <th>Price</th>
+                        <th>Pris</th>
                     </tr>
                 </thead>
                 <tbody id="salesItemTableBody">
