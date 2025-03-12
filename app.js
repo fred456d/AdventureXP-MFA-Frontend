@@ -53,10 +53,19 @@ async function fetchActivities() {
             tableBody.appendChild(row);
         });
 
-        const tableBody = document.getElementById('activitiesTableBody');
+        // Tilføj række med inputfelter til tabellen
+        addInputRow();
+    } catch (error) {
+        console.error('Fejl ved hentning af aktiviteter:', error);
+    }
+}
 
-        const inputRow = document.createElement('tr');
-        inputRow.innerHTML = `
+// Tilføj inputfelter til tabellen
+function addInputRow() {
+    const tableBody = document.getElementById('activitiesTableBody');
+
+    const inputRow = document.createElement('tr');
+    inputRow.innerHTML = `
         <td><input type="text" id="title" placeholder="Titel"></td>
         <td><input type="number" id="age_Requirement" placeholder="Alder"></td>
         <td><input type="number" id="height_Requirement" placeholder="Højde"></td>
@@ -65,16 +74,11 @@ async function fetchActivities() {
         <td><button id="saveActivityButton">Gem Aktivitet</button></td>
     `;
 
-        tableBody.appendChild(inputRow);
+    tableBody.appendChild(inputRow);
 
-        // Tilføj event listener til knappen
-        document.getElementById('saveActivityButton').addEventListener('click', saveActivity);
-        
-    } catch (error) {
-        console.error('Fejl ved hentning af aktiviteter:', error);
-    }
+    // Tilføj event listener til knappen
+    document.getElementById('saveActivityButton').addEventListener('click', saveActivity);
 }
-
 
 // Gem en ny aktivitet
 async function saveActivity() {
