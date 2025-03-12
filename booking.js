@@ -1,61 +1,42 @@
-document.addEventListener('DOMContentLoaded', () => {
-    loadActivities();
-    document.getElementById('bookingForm').addEventListener('submit', createBooking);
-});
+export function bookingPage() {
+    return `
+<h1>Opret Booking</h1>
+<form id="bookingForm">
+  <label for="activity">Aktivitet:</label>
+  <select id="activity" name="activity" required></select><br><br>
 
-// **🔹 Henter aktiviteter fra backend**
-async function loadActivities() {
-    const activitySelect = document.getElementById('activity');
+  <label for="date">Dato:</label>
+  <input type="date" id="date" name="date" required><br><br>
 
-    try {
-        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/activities');
-        const activities = await response.json();
+  <label for="time">Tidspunkt:</label>
+  <input type="time" id="time" name="time" required><br><br>
 
-        activities.forEach(activity => {
-            const option = document.createElement('option');
-            option.value = activity.id;
-            option.textContent = `${activity.title} (Min. alder: ${activity.age_Requirement})`;
-            activitySelect.appendChild(option);
-        });
-    } catch (error) {
-        console.error('Fejl ved hentning af aktiviteter:', error);
-    }
-}
+  <label for="duration">Varighed (timer:minutter):</label>
+  <input type="time" id="duration" name="duration" required><br><br>
 
-// **🔹 Sender booking-data til backend**
-async function createBooking(event) {
-    event.preventDefault();
+  <label for="participants">Antal deltagere:</label>
+  <input type="number" id="participants" name="participants" required min="1"><br><br>
 
-    const booking = {
-        activity: { id: document.getElementById('activity').value },
-        date: document.getElementById('date').value,
-        time: document.getElementById('time').value,
-        duration: document.getElementById('duration').value,
-        participants: parseInt(document.getElementById('participants').value),
-        sodas: parseInt(document.getElementById('sodas').value) || 0,
-        sweet_Grams: parseInt(document.getElementById('sweetGrams').value) || 0,
-        tshirts: parseInt(document.getElementById('tshirts').value) || 0,
-        customer: {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value
-        }
-    };
+  <label for="sodas">Sodavand:</label>
+  <input type="number" id="sodas" name="sodas" min="0"><br><br>
 
-    try {
-        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/create-booking', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(booking)
-        });
+  <label for="sweetGrams">Slik (gram):</label>
+  <input type="number" id="sweetGrams" name="sweetGrams" min="0"><br><br>
 
-        if (response.ok) {
-            alert('Booking oprettet succesfuldt!');
-            document.getElementById('bookingForm').reset();
-        } else {
-            alert('Fejl ved oprettelse af booking.');
-        }
-    } catch (error) {
-        console.error('Fejl:', error);
-    }
+  <label for="tshirts">T-shirts:</label>
+  <input type="number" id="tshirts" name="tshirts" min="0"><br><br>
+
+  <h2>Kundeoplysninger</h2>
+  <label for="name">Navn:</label>
+  <input type="text" id="name" name="name" required><br><br>
+
+  <label for="email">E-mail:</label>
+  <input type="email" id="email" name="email" required><br><br>
+
+  <label for="phone">Telefon:</label>
+  <input type="tel" id="phone" name="phone" required><br><br>
+
+  <button type="submit">Opret Booking</button>
+</form>
+    `;
 }
