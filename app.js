@@ -30,13 +30,13 @@ window.showPage = function (page) {
             </main>
         `;
     } else if (page === 'aktiviteter') {
-        contentDiv.innerHTML = activityPage();
+        activityPage();
     } else if (page === 'booking') {
         contentDiv.innerHTML = `<h1>Booking</h1><p>Her kan du booke din aktivitet.</p>`;
     } else if (page === 'vagtplan') {
         contentDiv.innerHTML = `<h1>Vagtplan</h1><p>Her er vagtplanen.</p>`;
     } else if (page === 'butik') {
-        contentDiv.innerHTML = storePage();
+        storePage();
     } else if (page === 'opretBooking') {
         createBookingPage();
     } else {
