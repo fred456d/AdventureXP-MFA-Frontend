@@ -6,8 +6,10 @@ export async function fetchActivities() {
     console.log("Henter aktiviteter fra:", `${BASE_URL}/activities`);
     try {
         const response = await fetch(`${BASE_URL}/activities`);
+        console.log("Response status:", response.status);
         if (!response.ok) throw new Error(`Fejl: ${response.statusText}`);
         return await response.json();
+        console.log("Aktiviteter modtaget:", data);
     } catch (error) {
         console.error('Fejl ved hentning af aktiviteter:', error);
         alert("Kunne ikke hente aktiviteter. Prøv igen senere!");
