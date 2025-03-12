@@ -43,7 +43,7 @@ async function createBooking(event) {
     };
 
     try {
-        const response = await fetch('http://localhost:8080/create-booking', {
+        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/create-booking', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(booking)
