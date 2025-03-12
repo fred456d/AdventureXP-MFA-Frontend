@@ -32,6 +32,7 @@ window.showPage = function (page) {
         contentDiv.innerHTML = `<h1>Vagtplan</h1><p>Her er vagtplanen.</p>`;
     } else if (page === 'butik') {
         contentDiv.innerHTML = butikPage();
+        fetchSalesItems();
     }
 };
 
