@@ -229,7 +229,7 @@ async function saveSalesItem() {
     };
 
     try {
-        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/salesItems', {
+        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/salesitems', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(salesItem)
