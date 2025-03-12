@@ -1,5 +1,6 @@
 import { aktiviteterPage } from './aktiviteterPage.js';
 import { butikPage } from "./butikPage.js";
+import { bookingPage } from "./booking.js";
 
 // Start med at vise forsiden, når siden indlæses
 window.onload = function () {
