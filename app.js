@@ -50,7 +50,8 @@ window.showPage = function (page) {
         } else {
             console.error("Fejl: bookingForm ikke fundet i DOM'en.");
         }
-        }
+    }
+}
 // **🔹 Henter aktiviteter fra backend**
         async function loadActivities() {
             const activitySelect = document.getElementById('activity');
