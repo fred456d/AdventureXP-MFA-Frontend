@@ -1,6 +1,7 @@
 import { activityPage } from './pages/activityPage.js';
 import { storePage } from './pages/storePage.js';
 import { createBookingPage } from './pages/createBookingPage.js';
+import { schedulePage } from "./pages/schedulePage";
 
 // Start med at vise forsiden, når siden indlæses
 window.onload = function () {
@@ -34,7 +35,7 @@ window.showPage = function (page) {
     } else if (page === 'booking') {
         contentDiv.innerHTML = `<h1>Booking</h1><p>Her kan du booke din aktivitet.</p>`;
     } else if (page === 'vagtplan') {
-        contentDiv.innerHTML = `<h1>Vagtplan</h1><p>Her er vagtplanen.</p>`;
+        schedulePage();
     } else if (page === 'butik') {
         storePage();
     } else if (page === 'opretBooking') {
