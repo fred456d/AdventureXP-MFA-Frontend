@@ -1,6 +1,6 @@
 import { aktiviteterPage } from './aktiviteterPage.js';
 
-window.showPage = function(page) {
+window.showPage = function (page) {
     const contentDiv = document.getElementById('content');
 
     if (page === 'forside') {
@@ -8,14 +8,11 @@ window.showPage = function(page) {
             <h1>Velkommen til AdventureXP's interne system</h1>
             <main>
                 <div class="container">
-                    <!-- Booking Kasse -->
                     <div class="card">
                         <h2>Booking</h2>
                         <a href="#" onclick="showPage('opretBooking')">Opret booking</a>
                         <a href="#" onclick="showPage('seBooking')">Se/rediger/slet booking</a>
                     </div>
-            
-                    <!-- Admin Kasse -->
                     <div class="card">
                         <h2>Admin</h2>
                         <a href="#" onclick="showPage('vagtplan')">Vagtplan</a>
@@ -27,29 +24,22 @@ window.showPage = function(page) {
         `;
     } else if (page === 'aktiviteter') {
         contentDiv.innerHTML = aktiviteterPage();
-        fetchActivities(); // Henter og viser aktiviteter i tabellen
-        saveActivity();
-
+        fetchActivities(); // Hent aktiviteter fra backend
     } else if (page === 'booking') {
-        contentDiv.innerHTML = `
-            <h1>Booking</h1>
-            <p>Her kan du booke din aktivitet.</p>
-        `;
-    }else if (page === 'vagtplan') {
-        contentDiv.innerHTML = `
-            <h1>Vagtplan</h1>
-            <p>Her er vagtplanen.</p>
-        `;
+        contentDiv.innerHTML = `<h1>Booking</h1><p>Her kan du booke din aktivitet.</p>`;
+    } else if (page === 'vagtplan') {
+        contentDiv.innerHTML = `<h1>Vagtplan</h1><p>Her er vagtplanen.</p>`;
     }
-}
+};
 
+// Hent og vis aktiviteter i tabellen
 async function fetchActivities() {
     try {
         const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/activities');
         const activities = await response.json();
 
         const tableBody = document.getElementById('activitiesTableBody');
-        tableBody.innerHTML = ''; // Ryd tabellen før vi tilføjer nye data
+        tableBody.innerHTML = ''; // Ryd tabellen før nye data
 
         activities.forEach(activity => {
             const row = document.createElement('tr');
@@ -62,61 +52,70 @@ async function fetchActivities() {
             `;
             tableBody.appendChild(row);
         });
+
+        // Tilføj række med inputfelter til tabellen
+        addInputRow();
     } catch (error) {
         console.error('Fejl ved hentning af aktiviteter:', error);
     }
 }
 
+// Tilføj inputfelter til tabellen
+function addInputRow() {
+    const tableBody = document.getElementById('activitiesTableBody');
 
-// Her er JS-kode som kører når man trykker submit-knap i ovenståene HTML-->
-// const activity opretter et JS-objekt med de indtastede værdier -->
-// adressen http://localhost:8080/activities er den request som sendes til backend -->
-// Så når man submitter, sendes data til den backend controller som tager imod request med /activities -->
-// async gør funktionen asynkron så man kan bruge "await" inde i den -->
-// preventDefault forhindrer hjemmesiden i at opdatere når man submitter -->
-// await pauser udførelsen af koden, indtil fetch-anmodningen er færdig, så response laves først når vi har svar -->
+    const inputRow = document.createElement('tr');
+    inputRow.innerHTML = `
+        <td><input type="text" id="title" placeholder="Titel"></td>
+        <td><input type="number" id="age_Requirement" placeholder="Alder"></td>
+        <td><input type="number" id="height_Requirement" placeholder="Højde"></td>
+        <td><input type="text" id="equipment" placeholder="Udstyr"></td>
+        <td><input type="number" id="hourly_price" placeholder="Pris"></td>
+        <td><button id="saveActivityButton">Gem Aktivitet</button></td>
+    `;
 
-function saveActivity(){
-    document.getElementById('activityForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
+    tableBody.appendChild(inputRow);
 
-        const activity = {
-            title: document.getElementById('title').value,
-            age_Requirement: parseInt(document.getElementById('age_Requirement').value),
-            height_Requirement: parseInt(document.getElementById('height_Requirement').value),
-            equipment: document.getElementById('equipment').value,
-            hourly_price: parseInt(document.getElementById('hourly_price').value)
-        };
-
-        try {
-            const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/activities', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(activity)
-            });
-
-            if (response.ok) {
-                alert('Aktivitet oprettet succesfuldt!');
-                document.getElementById('activityForm').reset();
-                fetchActivities(); // Opdater tabellen efter tilføjelse
-            } else {
-                alert('Fejl under oprettelse af aktivitet.');
-            }
-        } catch (error) {
-            console.error('Fejl:', error);
-        }
-    });
+    // Tilføj event listener til knappen
+    document.getElementById('saveActivityButton').addEventListener('click', saveActivity);
 }
-// Håndter tilbage-knap i browseren
-window.onpopstate = function(event) {
-    if (event.state && event.state.page) {
-        showPage(event.state.page);
+
+// Gem en ny aktivitet
+async function saveActivity() {
+    const activity = {
+        title: document.getElementById('title').value,
+        age_Requirement: parseInt(document.getElementById('age_Requirement').value),
+        height_Requirement: parseInt(document.getElementById('height_Requirement').value),
+        equipment: document.getElementById('equipment').value,
+        hourly_price: parseInt(document.getElementById('hourly_price').value)
+    };
+
+    try {
+        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/activities', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(activity)
+        });
+
+        if (response.ok) {
+            alert('Aktivitet oprettet succesfuldt!');
+            fetchActivities(); // Opdater tabellen
+        } else {
+            alert('Fejl under oprettelse af aktivitet.');
+        }
+    } catch (error) {
+        console.error('Fejl:', error);
     }
 }
 
+// Håndter tilbage-knap i browseren
+window.onpopstate = function (event) {
+    if (event.state && event.state.page) {
+        showPage(event.state.page);
+    }
+};
+
 // Start med at vise forsiden, når siden indlæses
-window.onload = function() {
+window.onload = function () {
     showPage('forside');
 };
