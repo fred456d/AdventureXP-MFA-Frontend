@@ -1,5 +1,7 @@
 import { BASE_URL } from './config.js';
 
+console.log("BASE_URL:", BASE_URL)
+
 export async function fetchActivities() {
     console.log("Henter aktiviteter fra:", `${BASE_URL}/activities`);
     try {
