@@ -1,4 +1,5 @@
 import { aktiviteterPage } from './aktiviteterPage.js';
+import { butikPage } from "./butikPage.js";
 
 window.showPage = function (page) {
     const contentDiv = document.getElementById('content');
@@ -29,6 +30,8 @@ window.showPage = function (page) {
         contentDiv.innerHTML = `<h1>Booking</h1><p>Her kan du booke din aktivitet.</p>`;
     } else if (page === 'vagtplan') {
         contentDiv.innerHTML = `<h1>Vagtplan</h1><p>Her er vagtplanen.</p>`;
+    } else if (page === 'butik') {
+        contentDiv.innerHTML = butikPage();
     }
 };
 
@@ -58,6 +61,48 @@ async function fetchActivities() {
     } catch (error) {
         console.error('Fejl ved hentning af aktiviteter:', error);
     }
+}
+
+// Hent og vis aktiviteter i tabellen
+async function fetchSalesItems() {
+    try {
+        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/salesitems');
+        const salesItems = await response.json();
+
+        const tableBody = document.getElementById('salesItemTableBody');
+        tableBody.innerHTML = ''; // Ryd tabellen før nye data
+
+        salesItems.forEach(salesItem => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${salesItem.type}</td>
+                <td>${salesItem.price}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Tilføj række med inputfelter til tabellen
+        addSalesItemInputRow();
+    } catch (error) {
+        console.error('Fejl ved hentning af produkter:', error);
+    }
+}
+
+// Tilføj inputfelter til tabellen
+function addSalesItemInputRow() {
+    const tableBody = document.getElementById('salesItemTableBody');
+
+    const inputRow = document.createElement('tr');
+    inputRow.innerHTML = `
+        <td><input type="text" id="type" placeholder="Type"></td>
+        <td><input type="number" id="price" placeholder="Pris"></td>
+        <td><button id="saveSalesItemButton">Gem Produkt</button></td>
+    `;
+
+    tableBody.appendChild(inputRow);
+
+    // Tilføj event listener til knappen
+    document.getElementById('saveSalesItemButton').addEventListener('click', saveSalesItem);
 }
 
 // Tilføj inputfelter til tabellen
@@ -102,6 +147,31 @@ async function saveActivity() {
             fetchActivities(); // Opdater tabellen
         } else {
             alert('Fejl under oprettelse af aktivitet.');
+        }
+    } catch (error) {
+        console.error('Fejl:', error);
+    }
+}
+
+// Gem et nyt produkt
+async function saveSalesItem() {
+    const salesItem = {
+        type: document.getElementById('type').value,
+        price: parseInt(document.getElementById('price').value),
+    };
+
+    try {
+        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/salesItems', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(salesItem)
+        });
+
+        if (response.ok) {
+            alert('Produkt oprettet succesfuldt!');
+            fetchSalesItems(); // Opdater tabellen
+        } else {
+            alert('Fejl under oprettelse af produkt.');
         }
     } catch (error) {
         console.error('Fejl:', error);
