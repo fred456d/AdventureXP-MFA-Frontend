@@ -24,13 +24,57 @@ window.showPage = function (page) {
         `;
     } else if (page === 'aktiviteter') {
         contentDiv.innerHTML = aktiviteterPage();
-        //fetchActivities(); // Hent aktiviteter fra backend
+        fetchActivities(); // Hent aktiviteter fra backend
     } else if (page === 'booking') {
         contentDiv.innerHTML = `<h1>Booking</h1><p>Her kan du booke din aktivitet.</p>`;
     } else if (page === 'vagtplan') {
         contentDiv.innerHTML = `<h1>Vagtplan</h1><p>Her er vagtplanen.</p>`;
     }
 };
+
+// Hent og vis aktiviteter i tabellen
+async function fetchActivities() {
+    try {
+        const response = await fetch('https://adventurexp-g5freqhuangfa9ab.northeurope-01.azurewebsites.net/activities');
+        const activities = await response.json();
+
+        const tableBody = document.getElementById('activitiesTableBody');
+        tableBody.innerHTML = ''; // Ryd tabellen før nye data
+
+        activities.forEach(activity => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${activity.title}</td>
+                <td>${activity.age_Requirement}</td>
+                <td>${activity.height_Requirement}</td>
+                <td>${activity.equipment}</td>
+                <td>${activity.hourly_price} DKK</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        const tableBody = document.getElementById('activitiesTableBody');
+
+        const inputRow = document.createElement('tr');
+        inputRow.innerHTML = `
+        <td><input type="text" id="title" placeholder="Titel"></td>
+        <td><input type="number" id="age_Requirement" placeholder="Alder"></td>
+        <td><input type="number" id="height_Requirement" placeholder="Højde"></td>
+        <td><input type="text" id="equipment" placeholder="Udstyr"></td>
+        <td><input type="number" id="hourly_price" placeholder="Pris"></td>
+        <td><button id="saveActivityButton">Gem Aktivitet</button></td>
+    `;
+
+        tableBody.appendChild(inputRow);
+
+        // Tilføj event listener til knappen
+        document.getElementById('saveActivityButton').addEventListener('click', saveActivity);
+        
+    } catch (error) {
+        console.error('Fejl ved hentning af aktiviteter:', error);
+    }
+}
+
 
 // Gem en ny aktivitet
 async function saveActivity() {
