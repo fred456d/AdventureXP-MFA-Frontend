@@ -23,7 +23,7 @@ window.showPage = function (page) {
             </main>
         `;
     } else if (page === 'aktiviteter') {
-        //contentDiv.innerHTML = aktiviteterPage();
+        contentDiv.innerHTML = aktiviteterPage();
         fetchActivities(); // Hent aktiviteter fra backend
     } else if (page === 'booking') {
         contentDiv.innerHTML = `<h1>Booking</h1><p>Her kan du booke din aktivitet.</p>`;
