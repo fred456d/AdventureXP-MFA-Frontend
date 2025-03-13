@@ -76,7 +76,7 @@ async function saveActivityHandler() {
 
     if (await saveActivity(activity)) {
         alert('Aktivitet oprettet!');
-        loadActivities(); // Opdater listen uden reload
+        activityPage(); // Opdater listen uden reload
     } else {
         alert('Fejl ved oprettelse.');
     }
