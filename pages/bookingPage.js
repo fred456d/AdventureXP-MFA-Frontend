@@ -111,26 +111,37 @@ function renderBookings(bookings) {
 async function openEditModal(event) {
     const button = event.target;
     document.getElementById("editModal").style.display = "block";
+
+    console.log("Åbner modal med booking:", button.dataset); // Debugging
+
     document.getElementById("editDate").value = button.dataset.date;
     document.getElementById("editTime").value = button.dataset.time;
     document.getElementById("editDuration").value = button.dataset.duration;
     document.getElementById("editPhone").value = button.dataset.phone;
-    document.getElementById("editCustomer").value = button.dataset.customer;
+    document.getElementById("editCustomer").value = button.dataset.customerId;
 
     const bookingId = button.dataset.id;
-    await loadActivitiesForEdit(button.dataset.activity); //DROPDOWN!!
+    const customerId = button.dataset.customerId;  // RIGTIG STAVEMÅDE ✅
+    const activityId = button.dataset.activityId;  // Sikrer at vi bruger det rigtige navn
+
+    console.log("Customer ID:", customerId, "Activity ID:", activityId, "Phone:", button.dataset.phone); // Debugging
+
+    await loadActivitiesForEdit(activityId); // Fylder dropdown med aktiviteter
 
     document.getElementById("editForm").onsubmit = async function (event) {
         event.preventDefault();
 
         const updatedBooking = {
-            id: bookingId, // Beholder id'et
+            id: parseInt(bookingId),
             date: document.getElementById("editDate").value,
             time: document.getElementById("editTime").value,
             duration: document.getElementById("editDuration").value,
-            customerId: parseInt(costumerId),  // Sender kun `customerId`
-            activityId: parseInt(document.getElementById("editActivity").value) // Sender kun `activityId`
+            phone: document.getElementById("editPhone").value,
+            customerId: parseInt(customerId),  // RIGTIG STAVEMÅDE ✅
+            activityId: parseInt(document.getElementById("editActivity").value)
         };
+
+        console.log("Sender opdateret booking til backend:", updatedBooking); // Debugging
 
         await updateBooking(updatedBooking);
         closeEditModal();
