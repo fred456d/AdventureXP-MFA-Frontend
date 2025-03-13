@@ -21,7 +21,7 @@ export function activityPage() {
     `;
 
     await loadActivities();
-    addInputRow()
+    addInputRow();
 }
 
 async function loadActivities() {
