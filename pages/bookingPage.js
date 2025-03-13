@@ -118,18 +118,18 @@ async function openEditModal(event) {
     document.getElementById("editCustomer").value = button.dataset.customer;
 
     const bookingId = button.dataset.id;
-    await loadActivitiesForEdit(button.dataset.activity); // Fylder dropdown med aktiviteter
+    await loadActivitiesForEdit(button.dataset.activity); //DROPDOWN!!
 
     document.getElementById("editForm").onsubmit = async function (event) {
         event.preventDefault();
+
         const updatedBooking = {
-            id: bookingId,
+            id: bookingId, // Beholder id'et
             date: document.getElementById("editDate").value,
             time: document.getElementById("editTime").value,
             duration: document.getElementById("editDuration").value,
-            phone: document.getElementById("editPhone").value,
-            activity: document.getElementById("editActivity").value, // Valgt aktivitets-ID
-            customer: document.getElementById("editCustomer").value,
+            customerId: parseInt(bookingId),  // Sender kun `customerId`
+            activityId: parseInt(document.getElementById("editActivity").value) // Sender kun `activityId`
         };
 
         await updateBooking(updatedBooking);
