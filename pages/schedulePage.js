@@ -31,13 +31,18 @@ async function loadSchedule() {
         const bookings = await fetchBookings();
         bookings.forEach(booking => {
             const row = document.createElement('tr');
+            const time_split = booking.time.split(":");
+            const duration_split = booking.duration.split(":");
+
+            const instructor = booking.instructor ? booking.instructor : 0;
+
             row.innerHTML = `
-                <td>${booking.time}</td>
-                <td>${booking.duration}</td>
+                <td>kl. ${time_split[0]}:${time_split[1]}</td>
+                <td>${duration_split[0]}t : ${duration_split[1]}m</td>
                 <td>${booking.participants}</td>
                 <td>${booking.activity.title}</td>
                 <td>${booking.tshirts}/${booking.sodas}/${booking.sweet_Grams} g</td>
-                <td>${booking.instructor}</td>
+                <td>${instructor}</td>
             `;
             tableBody.appendChild(row);
         });
