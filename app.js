@@ -2,6 +2,8 @@ import { activityPage } from './pages/activityPage.js';
 import { storePage } from './pages/storePage.js';
 import { createBookingPage } from './pages/createBookingPage.js';
 import { schedulePage } from "./pages/schedulePage.js";
+import { updateBookingPage } from './pages/bookingPage.js
+
 
 // Start med at vise forsiden, når siden indlæses
 window.onload = function () {
