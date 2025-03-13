@@ -35,9 +35,9 @@ async function loadSchedule() {
                 <td>${booking.time}</td>
                 <td>${booking.duration}</td>
                 <td>${booking.participants}</td>
-                <td>${booking.activity}</td>
-                <td>${booking.tshirts}/${booking.sodas}${booking.sweet_Grams}/</td>
-                <td>Instruktør navn</td>
+                <td>${booking.activity.title}</td>
+                <td>${booking.tshirts}/${booking.sodas}/${booking.sweet_Grams} g</td>
+                <td>${booking.instructor}</td>
             `;
             tableBody.appendChild(row);
         });
