@@ -66,7 +66,22 @@ async function loadSchedule() {
 }
 
 function groupByDay(bookings) {
-    return bookings.reduce((acc, booking) => {
+    return bookings
+        .filter(booking => {
+            const bookingDate = new Date(booking.date);
+            const today = new Date();
+
+            const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+            const diffInDays = Math.floor((bookingDate - today) / (1000 * 60 * 60 * 24));
+
+            // Filter only for Monday to Friday, and exclude past bookings
+            return (
+                diffInDays >= 0 &&
+                bookingDate.getDay() >= 1 && // Exclude Sunday
+                bookingDate.getDay() <= 5 // Exclude Saturday
+            );
+        })
+        .reduce((acc, booking) => {
         const date = new Date(booking.date);
         const dayName = daysOfWeek[date.getDay()];
 
