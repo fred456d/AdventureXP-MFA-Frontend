@@ -17,12 +17,11 @@ export function activityPage() {
                 </thead>
                 <tbody id="activitiesTableBody"></tbody>
             </table>
-            <button id="addActivityButton">Tilføj aktivitet</button>
         </div>
     `;
 
     loadActivities();
-    setupEventListeners();
+    addInputRow()
 }
 
 async function loadActivities() {
@@ -46,10 +45,6 @@ async function loadActivities() {
     } catch (error) {
         console.error("Fejl ved hentning af aktiviteter:", error);
     }
-}
-
-function setupEventListeners() {
-    document.getElementById('addActivityButton').addEventListener('click', addInputRow);
 }
 
 function addInputRow() {
