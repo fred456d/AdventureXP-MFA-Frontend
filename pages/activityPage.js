@@ -20,7 +20,7 @@ export function activityPage() {
         </div>
     `;
 
-    loadActivities();
+    await loadActivities();
     addInputRow()
 }
 
@@ -76,7 +76,7 @@ async function saveActivityHandler() {
 
     if (await saveActivity(activity)) {
         alert('Aktivitet oprettet!');
-        fetchActivities(); // Opdater listen uden reload
+        loadActivities(); // Opdater listen uden reload
     } else {
         alert('Fejl ved oprettelse.');
     }
