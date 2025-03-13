@@ -1,6 +1,6 @@
 import {fetchBookings} from "../services/bookingService.js";
 
-export function schedulePage() {
+export async function schedulePage() {
     document.querySelector("#content").innerHTML = `
         <h1>Vagtplan</h1>
         <div id="scheduleContainer">
@@ -19,6 +19,8 @@ export function schedulePage() {
             </table>
         </div>
     `;
+
+    await loadSchedule();
 }
 
 async function loadSchedule() {
