@@ -1,4 +1,4 @@
-import { fetchBookings, deleteBooking, updateBooking, updateCustomer } from '../services/bookingService.js';
+import { fetchBookings, deleteBooking, updateBooking } from '../services/bookingService.js';
 import { fetchActivities, updateActivity } from '../services/activityService.js';
 import { updateCustomer } from '../services/customerService.js';
 // Henter aktiviteter
