@@ -56,7 +56,7 @@ export async function bookingPage() {
             </form>
         </div>
 
-        <div id="confirmBox" class="confirm-box">
+        <div id="confirmBox" class="confirm-box" style="display:none;">
             <p>Vil du slette booking?</p>
             <button id="confirmDelete">Ja</button>
             <button id="closeConfirm">Nej</button>
@@ -99,7 +99,7 @@ function renderBookings(bookings) {
                     data-activity-id="${booking.activity?.id}">Rediger</button>
 
                 <button class="delete-btn" data-id="${booking.id}">Slet</button>
-            </td>
+            </td>   
         `;
         tableBody.appendChild(row);
     });
@@ -220,16 +220,27 @@ function closeEditModal() {
     document.getElementById("editModal").style.display = "none";
 }
 
-// Bekræftigelsesbox
+//slettebox
 function openConfirmBox(event) {
     const button = event.target;
     const bookingId = button.dataset.id;
 
-    document.getElementById("confirmBox").style.display = "block";
+    console.log("Åbner slette-bekræftelse for booking:", bookingId); // Debugging
+
+    const confirmBox = document.getElementById("confirmBox");
+    confirmBox.style.display = "block"; // Gør boksen synlig
+
+    // Opdater slet-knappen med bookingens ID
     document.getElementById("confirmDelete").onclick = async function () {
+        console.log("Sletter booking med ID:", bookingId); // Debugging
         await deleteBooking(bookingId);
         closeConfirmBox();
         bookingPage();
+    };
+
+
+    document.getElementById("closeConfirm").onclick = function () {
+        closeConfirmBox();
     };
 }
 
