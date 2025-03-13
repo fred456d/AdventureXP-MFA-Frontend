@@ -72,7 +72,7 @@ function groupByDay(bookings) {
             const today = new Date();
 
             const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-            const diffInDays = Math.floor((bookingDate - today) / (1000 * 60 * 60 * 24));
+            const diffInDays = Math.floor((bookingDate - currentDay) / (1000 * 60 * 60 * 24));
 
             // Filter only for Monday to Friday, and exclude past bookings
             return (
