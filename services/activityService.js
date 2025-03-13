@@ -31,3 +31,21 @@ export async function saveActivity(activity) {
         alert("Kunne ikke oprette aktivitet. Tjek input og prøv igen!");
     }
 }
+export async function updateActivity(activity) {
+    try {
+        const response = await fetch(`${BASE_URL}/activities/${activity.id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(activity)
+        });
+
+        if (!response.ok) {
+            throw new Error(`Fejl: ${response.status} - ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Fejl ved opdatering af aktivitet:", error);
+        throw error;
+    }
+}
+

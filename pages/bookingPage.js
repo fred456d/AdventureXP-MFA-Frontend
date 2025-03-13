@@ -118,7 +118,7 @@ async function openEditModal(event) {
     document.getElementById("editTime").value = button.dataset.time;
     document.getElementById("editDuration").value = button.dataset.duration;
     document.getElementById("editPhone").value = button.dataset.phone;
-    document.getElementById("editCustomer").value = button.dataset.customerId;
+    document.getElementById("editCustomer").value = button.dataset.name
 
     const bookingId = button.dataset.id;
     const customerId = button.dataset.customerId;  // RIGTIG STAVEMÅDE ✅
@@ -130,6 +130,37 @@ async function openEditModal(event) {
 
     document.getElementById("editForm").onsubmit = async function (event) {
         event.preventDefault();
+        const bookingId = parseInt(document.getElementById("editBookingId").value);
+        const customerId = parseInt(document.getElementById("editCustomerId").value);
+        const activityId = parseInt(document.getElementById("editActivity").value);
+
+        // Opret tomme objekter og fyld kun de felter, der er ændret
+        const updatedCustomer = {};
+        const currentCustomerName = document.getElementById("editCustomer").getAttribute("data-original-value");
+        const newCustomerName = document.getElementById("editCustomer").value;
+        if (newCustomerName !== currentCustomerName) {
+            updatedCustomer.id = customerId;
+            updatedCustomer.name = newCustomerName;
+        }
+        //Opdaterer phone
+        const currentPhone = document.getElementById("editPhone").getAttribute("data-original-value");
+        const newPhone = document.getElementById("editPhone").value;
+        if (newPhone !== currentPhone) {
+            updatedCustomer.id = customerId;
+            updatedCustomer.phone = newPhone;
+        }
+        //Opdaterer aktiviteten
+        const updatedActivity = {};
+        const currentActivityId = document.getElementById("editActivity").getAttribute("data-original-value");
+        if (activityId !== parseInt(currentActivityId)) {
+            updatedActivity.id = activityId;
+        }
+        //Kæmpe trycatch der sender fejl hvis det ikke funger med opdateringen
+        try {
+            if (Object.keys(updatedCustomer).length > 0) {
+                console.log("Opdaterer kunde:", updatedCustomer);
+                await updateCustomer(updatedCustomer);
+            }
 
         const updatedBooking = {
             id: parseInt(bookingId),
@@ -137,7 +168,7 @@ async function openEditModal(event) {
             time: document.getElementById("editTime").value,
             duration: document.getElementById("editDuration").value,
             phone: document.getElementById("editPhone").value,
-            customerId: parseInt(customerId),  // RIGTIG STAVEMÅDE ✅
+            customerId: parseInt(customerId),
             activityId: parseInt(document.getElementById("editActivity").value)
         };
 
@@ -146,6 +177,10 @@ async function openEditModal(event) {
         await updateBooking(updatedBooking);
         closeEditModal();
         bookingPage();
+        } catch (error) {
+            console.error("Fejl ved opdatering:", error);
+            alert("Kunne ikke opdatere booking.");
+        }
     };
 }
 
