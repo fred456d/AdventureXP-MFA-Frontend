@@ -11,7 +11,7 @@ export async function activityPage() {
                         <th>Alderskrav</th>
                         <th>Højdekrav</th>
                         <th>Udstyr</th>
-                        <th>Timepris</th>git push --force
+                        <th>Timepris</th>
                         <th>Handling</th>
                     </tr>
                 </thead>
