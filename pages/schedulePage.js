@@ -44,7 +44,7 @@ async function loadSchedule() {
             row.innerHTML = `
                 <td>${date_split[2]}/${date_split[1]}</td>
                 <td>kl. ${time_split[0]}:${time_split[1]}</td>
-                <td>${endTime_split[0]}t : ${endTime_split[1]}m</td>
+                <td>kl. ${endTime_split[0]}t:${endTime_split[1]}m</td>
                 <td>${booking.participants}</td>
                 <td>${booking.activity.title}</td>
                 <td>${booking.tshirts}/${booking.sodas}/${booking.sweet_Grams} g</td>
