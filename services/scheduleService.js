@@ -11,7 +11,7 @@ export async function saveInstructor(event) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ instructor: instructorName }),
+            body: JSON.stringify(instructorName),
         });
 
         if (!response.ok) {
