@@ -33,7 +33,7 @@ window.showPage = function (page) {
     } else if (page === 'aktiviteter') {
         activityPage();
     } else if (page === 'booking') {
-        contentDiv.innerHTML = `<h1>Booking</h1><p>Her kan du booke din aktivitet.</p>`;
+        bookingPage();
     } else if (page === 'vagtplan') {
         schedulePage();
     } else if (page === 'butik') {

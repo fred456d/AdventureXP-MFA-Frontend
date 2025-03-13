@@ -63,7 +63,7 @@ export function createBookingPage() {
     });
 }
 
-async function loadActivitiesForBooking() {
+export async function loadActivitiesForBooking() {
     console.log("Henter aktiviteter til booking...");
     const activitySelect = document.getElementById('activity');
 
