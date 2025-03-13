@@ -1,6 +1,6 @@
 import { fetchActivities, saveActivity } from '../services/activityService.js';
 
-export function activityPage() {
+export async function activityPage() {
     document.querySelector("#content").innerHTML = `
         <h1>Aktiviteter</h1>
         <div id="activitiesContainer">
