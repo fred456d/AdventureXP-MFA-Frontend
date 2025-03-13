@@ -1,4 +1,5 @@
 import { BASE_URL } from './config.js';
+import {schedulePage} from "../pages/schedulePage.js";
 
 export async function saveInstructor(event) {
     const bookingId = event.target.dataset.id;
@@ -19,6 +20,8 @@ export async function saveInstructor(event) {
         }
 
         alert("Instruktør gemt!");
+        await schedulePage();
+
     } catch (error) {
         console.error(error);
     }
