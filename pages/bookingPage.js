@@ -13,7 +13,7 @@ export async function bookingPage() {
                     <th>Varighed</th>
                     <th>Telefonnummer</th>
                     <th>Aktivitet</th>
-                    <th>Efternavn</th>
+                    <th>Kunde</th>
                     <th>Handling</th>
                 </tr>
             </thead>
@@ -42,8 +42,8 @@ export async function bookingPage() {
                     <option value="">Indlæser aktiviteter...</option>
                 </select>
 
-                <label for="editLastname">Efternavn:</label>
-                <input type="text" id="editLastname" required>
+                <label for="editCustomer">Kunde:</label>
+                <input type="text" id="editCustomer" required>
 
                 <button type="submit">Gem ændringer</button>
                 <button type="button" id="closeEdit">Annuller</button>
@@ -80,17 +80,17 @@ function renderBookings(bookings) {
             <td>${booking.date}</td>
             <td>${booking.time}</td>
             <td>${booking.duration}</td>
-            <td>${booking.phone}</td>
-            <td>${booking.activity.name}</td>
-            <td>${booking.lastname}</td>
+            <td>${booking.customer?.phone || 'Ingen tlf.'}</td>
+            <td>${booking.activity?.title || 'Ingen aktivitet'}</td>
+            <td>${booking.customer?.name || 'Ingen navn'}</td>
             <td class="buttons">
                 <button class="edit-btn" data-id="${booking.id}" 
                     data-date="${booking.date}" 
                     data-time="${booking.time}" 
                     data-duration="${booking.duration}" 
-                    data-phone="${booking.phone}" 
-                    data-activity="${booking.activity.id}" 
-                    data-lastname="${booking.lastname}">Rediger</button>
+                    data-phone="${booking.customer?.phone}" 
+                    data-activity="${booking.activity?.id}" 
+                    data-customer="${booking.customer?.name}">Rediger</button>
 
                 <button class="delete-btn" data-id="${booking.id}">Slet</button>
             </td>
@@ -115,7 +115,7 @@ async function openEditModal(event) {
     document.getElementById("editTime").value = button.dataset.time;
     document.getElementById("editDuration").value = button.dataset.duration;
     document.getElementById("editPhone").value = button.dataset.phone;
-    document.getElementById("editLastname").value = button.dataset.lastname;
+    document.getElementById("editCustomer").value = button.dataset.customer;
 
     const bookingId = button.dataset.id;
     await loadActivitiesForEdit(button.dataset.activity); // Fylder dropdown med aktiviteter
@@ -129,7 +129,7 @@ async function openEditModal(event) {
             duration: document.getElementById("editDuration").value,
             phone: document.getElementById("editPhone").value,
             activity: document.getElementById("editActivity").value, // Valgt aktivitets-ID
-            lastname: document.getElementById("editLastname").value,
+            customer: document.getElementById("editCustomer").value,
         };
 
         await updateBooking(updatedBooking);
@@ -149,8 +149,8 @@ async function loadActivitiesForEdit(selectedActivityId) {
         activities.forEach(activity => {
             const option = document.createElement("option");
             option.value = activity.id;
-            option.textContent = activity.name;
-            if (activity.id === selectedActivityId) {
+            option.textContent = activity.title;
+            if (parseInt(selectedActivityId) === activity.id) {
                 option.selected = true; // Forvalg den nuværende aktivitet
             }
             select.appendChild(option);
