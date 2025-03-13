@@ -89,8 +89,8 @@ function renderBookings(bookings) {
                     data-time="${booking.time}" 
                     data-duration="${booking.duration}" 
                     data-phone="${booking.customer?.phone}" 
-                    data-activity="${booking.activity?.id}" 
-                    data-customer="${booking.customer?.name}">Rediger</button>
+                    data-customer-id="${booking.customer?.id}" 
+                    data-activity-id="${booking.activity?.id}">Rediger</button>
 
                 <button class="delete-btn" data-id="${booking.id}">Slet</button>
             </td>
@@ -128,7 +128,7 @@ async function openEditModal(event) {
             date: document.getElementById("editDate").value,
             time: document.getElementById("editTime").value,
             duration: document.getElementById("editDuration").value,
-            customerId: parseInt(bookingId),  // Sender kun `customerId`
+            customerId: parseInt(costumerId),  // Sender kun `customerId`
             activityId: parseInt(document.getElementById("editActivity").value) // Sender kun `activityId`
         };
 
