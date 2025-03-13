@@ -34,7 +34,7 @@ window.showPage = function (page) {
         `;
     } else if (page === 'aktiviteter') {
         activityPage();
-    } else if (page === 'booking') {
+    } else if (page === 'seBooking') {
         bookingPage();
     } else if (page === 'vagtplan') {
         schedulePage();
