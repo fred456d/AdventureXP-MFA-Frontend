@@ -25,6 +25,10 @@ export async function bookingPage() {
         <div id="editModal" class="modal" style="display:none;">
             <h2>Rediger Booking</h2>
             <form id="editForm">
+                
+                <input type="hidden" id="editBookingId">
+                <input type="hidden" id="editCustomerId">   
+                
                 <label for="editDate">Dato:</label>
                 <input type="date" id="editDate" required>
 
@@ -107,12 +111,15 @@ function renderBookings(bookings) {
     });
 }
 
-// Åbn redigeringsmodal og fyld dropdown
+// åbn redigeringsmodal og fyld dropdown
 async function openEditModal(event) {
     const button = event.target;
     document.getElementById("editModal").style.display = "block";
 
     console.log("Åbner modal med booking:", button.dataset); // Debugging
+    //værdier til de skjulte felter
+    document.getElementById("editBookingId").value = button.dataset.id;
+    document.getElementById("editCustomerId").value = button.dataset.customerId;
 
     document.getElementById("editDate").value = button.dataset.date;
     document.getElementById("editTime").value = button.dataset.time;
@@ -121,8 +128,8 @@ async function openEditModal(event) {
     document.getElementById("editCustomer").value = button.dataset.name
 
     const bookingId = button.dataset.id;
-    const customerId = button.dataset.customerId;  // RIGTIG STAVEMÅDE ✅
-    const activityId = button.dataset.activityId;  // Sikrer at vi bruger det rigtige navn
+    const customerId = button.dataset.customerId;
+    const activityId = button.dataset.activityId;
 
     console.log("Customer ID:", customerId, "Activity ID:", activityId, "Phone:", button.dataset.phone); // Debugging
 
