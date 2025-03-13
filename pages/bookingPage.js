@@ -99,7 +99,7 @@ function renderBookings(bookings) {
                     data-activity-id="${booking.activity?.id}">Rediger</button>
 
                 <button class="delete-btn" data-id="${booking.id}">Slet</button>
-            </td>   
+            </td>
         `;
         tableBody.appendChild(row);
     });

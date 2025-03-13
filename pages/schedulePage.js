@@ -1,7 +1,5 @@
 import {fetchBookings} from "../services/bookingService.js";
 
-const daysOfWeek = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag"];
-
 export async function schedulePage() {
     document.querySelector("#content").innerHTML = `
         <h1>Vagtplan</h1>
@@ -16,14 +14,13 @@ export async function schedulePage() {
                         <th>Aktivitet</th>
                         <th>T-shirt/Soda/Slik</th>
                         <th>Instruktør</th>
+                        <th>Handling</th>
                     </tr>
                 </thead>
                 <tbody id="scheduleTableBody"></tbody>
             </table>
         </div>
     `;
-
-
 
     await loadSchedule();
 }
@@ -49,11 +46,44 @@ async function loadSchedule() {
                 <td>${booking.participants}</td>
                 <td>${booking.activity.title}</td>
                 <td>${booking.tshirts}/${booking.sodas}/${booking.sweet_Grams} g</td>
-                <td>${instructor}</td>
+                <td>
+                    <input type="text" class="instructor-input" value="${instructor}" data-id="${booking.id}">
+                </td>
+                <td class="buttons">
+                    <button class="save-btn" data-id="${booking.id}" >Gem instruktør</button>
+                </td>   
             `;
             tableBody.appendChild(row);
         });
     } catch (error) {
         console.error("Fejl ved hentning af bookings:", error);
+    }
+
+    document.querySelectorAll(".save-btn").forEach(button => {
+        button.addEventListener("click", saveInstructor);
+    });
+}
+
+async function saveInstructor(event) {
+    const bookingId = event.target.dataset.id;
+    const inputField = document.querySelector(`input[data-id="${bookingId}"]`);
+    const instructorName = inputField.value;
+
+    try {
+        const response = await fetch(`/bookings/${bookingId}/instructor`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ instructor: instructorName }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Fejl ved opdatering af instruktør');
+        }
+
+        alert("Instruktør gemt!");
+    } catch (error) {
+        console.error(error);
     }
 }
