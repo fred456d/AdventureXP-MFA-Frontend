@@ -1,4 +1,4 @@
-import { fetchBookings, deleteBooking, updateBooking } from '../services/bookingService.js';
+import { fetchBookings, deleteBooking, updateBooking, updateCustomer, updateActivity } from '../services/bookingService.js';
 import { fetchActivities } from '../services/activityService.js'; // Henter aktiviteter
 
 export async function bookingPage() {
