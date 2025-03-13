@@ -1,4 +1,5 @@
 import {fetchBookings} from "../services/bookingService.js";
+import {saveInstructor} from "../services/scheduleService.js";
 
 export async function schedulePage() {
     document.querySelector("#content").innerHTML = `
@@ -8,8 +9,8 @@ export async function schedulePage() {
                 <thead>
                     <tr>
                         <th>Dato</th>
-                        <th>Tidspunkt</th>
-                        <th>Varighed</th>
+                        <th>Start</th>
+                        <th>Slut</th>
                         <th>Antal deltagere</th>
                         <th>Aktivitet</th>
                         <th>T-shirt/Soda/Slik</th>
@@ -34,7 +35,8 @@ async function loadSchedule() {
         bookings.forEach(booking => {
             const row = document.createElement('tr');
             const time_split = booking.time.split(":");
-            const duration_split = booking.duration.split(":");
+            const endTime = booking.time + booking.duration
+            const endTime_split = endTime.split(":");
             const date_split = booking.date.split("-");
 
             const instructor = booking.instructor || "-";
@@ -42,7 +44,7 @@ async function loadSchedule() {
             row.innerHTML = `
                 <td>${date_split[2]}/${date_split[1]}</td>
                 <td>kl. ${time_split[0]}:${time_split[1]}</td>
-                <td>${duration_split[0]}t : ${duration_split[1]}m</td>
+                <td>${endTime_split[0]}t : ${endTime_split[1]}m</td>
                 <td>${booking.participants}</td>
                 <td>${booking.activity.title}</td>
                 <td>${booking.tshirts}/${booking.sodas}/${booking.sweet_Grams} g</td>
@@ -70,7 +72,7 @@ async function saveInstructor(event) {
     const instructorName = inputField.value;
 
     try {
-        const response = await fetch(`/bookings/${bookingId}/instructor`, {
+        const response = await fetch(`${BASE_URL}/bookings/${bookingId}/instructor`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
