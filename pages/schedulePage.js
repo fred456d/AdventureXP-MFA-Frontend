@@ -1,4 +1,4 @@
-import {fetchBookings} from "../services/bookingService";
+import {fetchBookings} from "../services/bookingService.js";
 
 export function schedulePage() {
     document.querySelector("#content").innerHTML = `
