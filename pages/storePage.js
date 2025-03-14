@@ -1,4 +1,5 @@
 import { fetchSalesItems, saveSalesItem } from '../services/salesItemService.js';
+import {savePrice} from "../services/salesItemService.js";
 
 export async function storePage() {
     document.querySelector("#content").innerHTML = `
@@ -9,7 +10,8 @@ export async function storePage() {
                 <thead>
                     <tr>
                         <th>Type</th>
-                        <th>Pris</th>
+                        <th>Pris (kr)</th>
+                        <th>Handling</th>
                     </tr>
                 </thead>
                 <tbody id="salesItemTableBody">
@@ -33,13 +35,21 @@ async function loadSalesItems() {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${salesItem.type}</td>
-                <td>${salesItem.price} DKK</td>
+                <td>
+                    <input type="number" class="price-input" value="${salesItem.price}" data-id="${salesItem.id}">
+                </td>
+                <td class="buttons">
+                    <button class="save-btn" data-id="${salesItem.id}" >Gem pris</button>
+                </td>   
             `;
             tableBody.appendChild(row);
         });
     } catch (error) {
         console.error('Fejl ved hentning af produkter:', error);
     }
+    document.querySelectorAll(".save-btn").forEach(button => {
+        button.addEventListener("click", savePrice);
+    });
 }
 
 function addSalesItemInputRow() {

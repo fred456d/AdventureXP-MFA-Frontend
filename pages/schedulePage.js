@@ -36,10 +36,10 @@ async function loadSchedule() {
             const row = document.createElement('tr');
 
             const time_split = booking.time.split(":");
-            const timeParts = booking.time.split(":").map(Number);
 
+            //Laver Date object og plusser duration til time, for at finde slut tidspunkt.
+            const timeParts = booking.time.split(":").map(Number);
             const durationParts = booking.duration.split(":").map(Number);
-            //Plus tider sammen
             const bookingTime = new Date();
             bookingTime.setHours(timeParts[0], timeParts[1]);
 
@@ -47,9 +47,6 @@ async function loadSchedule() {
             endTime.setHours(timeParts[0] + durationParts[0], timeParts[1] + durationParts[1]);
             const endTimeHour = String(endTime.getHours()).padStart(2,"0");
             const endTimeMin = String(endTime.getMinutes()).padStart(2,"0");
-
-
-            console.log("Endtime: " + endTime.getHours() +":"+ endTime.getMinutes());
 
             const date_split = booking.date.split("-");
 

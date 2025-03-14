@@ -1,4 +1,5 @@
 import { BASE_URL } from './config.js';
+import {storePage} from "../pages/storePage.js";
 
 export async function fetchSalesItems() {
     try {
@@ -24,5 +25,31 @@ export async function saveSalesItem(salesItem) {
     } catch (error) {
         console.error('Fejl ved oprettelse af produkt:', error);
         alert("Kunne ikke oprette produkt. Tjek input og prøv igen!");
+    }
+}
+
+export async function savePrice(event) {
+    const bookingId = event.target.dataset.id;
+    const inputField = document.querySelector(`input[data-id="${bookingId}"]`);
+    const price = inputField.value;
+
+    try {
+        const response = await fetch(`${BASE_URL}/salesitems/${bookingId}/price`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: price,
+        });
+
+        if (!response.ok) {
+            throw new Error('Fejl ved opdatering af pris');
+        }
+
+        alert("Pris gemt!");
+        await storePage();
+
+    } catch (error) {
+        console.error(error);
     }
 }
