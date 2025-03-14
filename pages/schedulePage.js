@@ -44,7 +44,7 @@ async function loadSchedule() {
             bookingTime.setHours(timeParts[0], timeParts[1]);
 
             const endTime = new Date();
-            endTime.setHours(time_split[0] + durationParts[0], time_split[1] + durationParts[1]);
+            endTime.setHours(timeParts[0] + durationParts[0], timeParts[1] + durationParts[1]);
 
             console.log("Endtime: " + endTime.getHours() +":"+ endTime.getMinutes());
 
@@ -55,7 +55,7 @@ async function loadSchedule() {
             row.innerHTML = `
                 <td>${date_split[2]}/${date_split[1]}</td>
                 <td>kl. ${time_split[0]}:${time_split[1]}</td>
-                <td>kl. ${endTime.getHours()}:${endTime.getMinutes()}</td>
+                <td>kl. ${String(endTime.getHours()).padStart(2,"0")}:${String(endTime.getMinutes()).padStart(2,"0")}</td>
                 <td>${booking.participants}</td>
                 <td>${booking.activity.title}</td>
                 <td>${booking.tshirts}/${booking.sodas}/${booking.sweet_Grams} g</td>
