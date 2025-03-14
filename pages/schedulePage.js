@@ -41,8 +41,14 @@ async function loadSchedule() {
             const bookingTime = new Date();
             bookingTime.setHours(time_split[0], time_split[1]);
 
+            console.log("time_split ", time_split[0] + time_split[1]);
+            console.log("duration_split ", duration_split[0] + duration_split[1]);
+
+
             const endTime = new Date();
             endTime.setHours(time_split[0] + duration_split[0], time_split[1] + duration_split[1]);
+
+            console.log("Endtime: " + endTime.getHours() +":"+ endTime.getMinutes());
 
             const date_split = booking.date.split("-");
 
