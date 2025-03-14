@@ -34,19 +34,24 @@ async function loadSchedule() {
         const bookings = await fetchBookings();
         bookings.forEach(booking => {
             const row = document.createElement('tr');
-            const time_split = booking.time.split(":");
-            const endTime = booking.time + booking.duration
-            const endTime_split = endTime.split(":");
-            const date_split = booking.date.split("-");
 
-            console.log("Time: "+ booking.time + "Duration: " + booking.duration + " --- Total= " + booking.time + booking.duration);
+            const time_split = booking.time.split(":");
+            const duration_split = booking.duration.split(":");
+            //Plus tider sammen
+            const bookingTime = new Date();
+            bookingTime.setHours(time_split[0], time_split[1]);
+
+            const endTime = new Date();
+            endTime.setHours(time_split[0] + duration_split[0], time_split[1] + duration_split[1]);
+
+            const date_split = booking.date.split("-");
 
             const instructor = booking.instructor || "-";
 
             row.innerHTML = `
                 <td>${date_split[2]}/${date_split[1]}</td>
                 <td>kl. ${time_split[0]}:${time_split[1]}</td>
-                <td>kl. ${endTime_split[0]}:${endTime_split[1]}</td>
+                <td>kl. ${endTime.getHours()}:${endTime.getMinutes()}</td>
                 <td>${booking.participants}</td>
                 <td>${booking.activity.title}</td>
                 <td>${booking.tshirts}/${booking.sodas}/${booking.sweet_Grams} g</td>
