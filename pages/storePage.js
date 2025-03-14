@@ -62,7 +62,7 @@ function addSalesItemInputRow() {
 
         if (await saveSalesItem(newSalesItem)) {
             alert('Produkt oprettet succesfuldt!');
-            loadSalesItems(); // Opdater listen
+            storePage(); // Opdater hele siden
         } else {
             alert('Fejl under oprettelse af produkt.');
         }
