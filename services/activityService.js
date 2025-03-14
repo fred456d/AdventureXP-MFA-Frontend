@@ -2,6 +2,10 @@ import { BASE_URL } from './config.js';
 
 console.log("BASE_URL:", BASE_URL)
 
+// asynkron funktion som returnerer alle aktiviteter fra backend
+// await pauser koden indtil fetch er færdig
+// response indeholder det faktiske svar fra serveren
+// response.json() konvererer svaret fra serveren til json
 export async function fetchActivities() {
     console.log("Henter aktiviteter fra:", `${BASE_URL}/activities`);
     try {

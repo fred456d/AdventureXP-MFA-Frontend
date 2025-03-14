@@ -1,6 +1,9 @@
 import { createBooking } from '../services/bookingService.js';
 import { fetchActivities } from '../services/activityService.js'; // Tilføjet import
 
+// "select" definerer at der er tale om en drop-down menu
+// id = "activity" gør det muligt at manipulere tabellen med JS
+// option value = "" er det som JS senere finder og lægger data ind i
 export function createBookingPage() {
     document.querySelector("#content").innerHTML = `
         <h1>Opret Booking</h1>
@@ -76,6 +79,8 @@ export function createBookingPage() {
 
 export async function loadActivitiesForBooking() {
     console.log("Henter aktiviteter til booking...");
+
+    // Her finder JS drop-down menuen fra html ovenfor og kalder den activitySelect
     const activitySelect = document.getElementById('activity');
 
     if (!activitySelect) {
@@ -84,6 +89,8 @@ export async function loadActivitiesForBooking() {
     }
 
     try {
+        // Der oprettes variabel som indeholder det som returneres fra fetchActivities
+        // fetchActivities returnerer en promise (kan ses ved async funktion og await)
         const activities = await fetchActivities();
         console.log("Modtog aktiviteter:", activities);
 
@@ -92,13 +99,15 @@ export async function loadActivitiesForBooking() {
             return;
         }
 
+        // JS giver drop down-menuen en standardoption
         activitySelect.innerHTML = '<option value="">Vælg en aktivitet</option>';
 
+        // Looper over alle aktiviteter hentet fra backend og sætter dem ind i dropdown
         activities.forEach(activity => {
-            const option = document.createElement('option');
-            option.value = activity.id;
-            option.textContent = activity.title;
-            activitySelect.appendChild(option);
+            const option = document.createElement('option'); //Opretter ny option
+            option.value = activity.id; // Sættr værdien (i baggrunden) til aktivitetens id
+            option.textContent = activity.title; // Viser aktivitetetens titel i menuen
+            activitySelect.appendChild(option); // tilføjer den nyoprettede option til activitySelect som er dropdown
         });
 
     } catch (error) {

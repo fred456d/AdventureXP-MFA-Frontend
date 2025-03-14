@@ -6,7 +6,6 @@ import { updateCustomer } from '../services/customerService.js';
 export async function bookingPage() {
     document.querySelector("#content").innerHTML = `
         <h1>Se/rediger/slet bookinger</h1>
-        <input type="text" id="search" placeholder="Søg efter tlf." />
         <table>
             <thead>
                 <tr>
