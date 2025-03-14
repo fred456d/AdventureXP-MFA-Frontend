@@ -17,7 +17,6 @@ export async function storePage() {
                 </tbody>
             </table>
         </div>
-        <button id="addSalesItemButton">Tilføj produkt</button>
     `;
 
     await loadSalesItems(); // Hent produkter når siden vises
@@ -38,8 +37,6 @@ async function loadSalesItems() {
             `;
             tableBody.appendChild(row);
         });
-
-        addSalesItemInputRow(); // Tilføj inputrække
     } catch (error) {
         console.error('Fejl ved hentning af produkter:', error);
     }
