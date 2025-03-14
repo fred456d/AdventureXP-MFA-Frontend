@@ -39,6 +39,8 @@ async function loadSchedule() {
             const endTime_split = endTime.split(":");
             const date_split = booking.date.split("-");
 
+            console.log("Time: "+ booking.time + "Duration: " + booking.duration + " --- Total= " + booking.time + booking.duration);
+
             const instructor = booking.instructor || "-";
 
             row.innerHTML = `
