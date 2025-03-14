@@ -36,17 +36,15 @@ async function loadSchedule() {
             const row = document.createElement('tr');
 
             const time_split = booking.time.split(":");
-            const duration_split = booking.duration.split(":");
+            const timeParts = booking.time.split(":").map(Number);
+
+            const durationParts = booking.duration.split(":").map(Number);
             //Plus tider sammen
             const bookingTime = new Date();
-            bookingTime.setHours(time_split[0], time_split[1]);
-
-            console.log("time_split ", time_split[0] + time_split[1]);
-            console.log("duration_split ", duration_split[0] + duration_split[1]);
-
+            bookingTime.setHours(timeParts[0], timeParts[1]);
 
             const endTime = new Date();
-            endTime.setHours(time_split[0] + duration_split[0], time_split[1] + duration_split[1]);
+            endTime.setHours(time_split[0] + durationParts[0], time_split[1] + durationParts[1]);
 
             console.log("Endtime: " + endTime.getHours() +":"+ endTime.getMinutes());
 
