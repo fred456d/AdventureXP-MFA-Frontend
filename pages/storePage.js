@@ -1,6 +1,6 @@
 import { fetchSalesItems, saveSalesItem } from '../services/salesItemService.js';
 
-export function storePage() {
+export async function storePage() {
     document.querySelector("#content").innerHTML = `
         <h1>Butik</h1>
 
@@ -20,8 +20,8 @@ export function storePage() {
         <button id="addSalesItemButton">Tilføj produkt</button>
     `;
 
-    loadSalesItems(); // Hent produkter når siden vises
-    setupEventListeners();
+    await loadSalesItems(); // Hent produkter når siden vises
+    addSalesItemInputRow()
 }
 
 async function loadSalesItems() {
@@ -43,10 +43,6 @@ async function loadSalesItems() {
     } catch (error) {
         console.error('Fejl ved hentning af produkter:', error);
     }
-}
-
-function setupEventListeners() {
-    document.getElementById('addSalesItemButton').addEventListener('click', addSalesItemInputRow);
 }
 
 function addSalesItemInputRow() {
